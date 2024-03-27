@@ -59,7 +59,17 @@ static void MX_TIM12_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+int TIME12_COUNTER=0;
+int flag_1=0;
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  if (htim == &htim12){//tim12 interrupt cycle is 1ms
+    TIME12_COUNTER++;
+    if(TIME12_COUNTER>=1000){
+      flag_1 = 1; 
+    }
+  }
+}
 /* USER CODE END 0 */
 
 /**
@@ -93,7 +103,7 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM12_Init();
   /* USER CODE BEGIN 2 */
-
+  HAL_TIM_Base_Start_IT(&htim12);//timer12 start
   /* USER CODE END 2 */
 
   /* Infinite loop */
