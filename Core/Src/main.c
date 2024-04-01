@@ -65,8 +65,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   if (htim == &htim12){//tim12 interrupt cycle is 1ms
     TIME12_COUNTER++;
-    if(TIME12_COUNTER>=1000){
+    if(TIME12_COUNTER>=500){
       flag_1 = 1; 
+      TIME12_COUNTER=0;
     }
   }
 }
@@ -112,7 +113,8 @@ int main(void)
   {
     /* USER CODE END WHILE */
       if(flag_1){
-
+        flag_1=0;
+        HAL_GPIO_TogglePin(GPIOA,GPIO_PIN_5);
       }
     /* USER CODE BEGIN 3 */
   }
